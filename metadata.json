@@ -1,0 +1,5 @@
+{
+  "name": "Human Resource Dashboard",
+  "description": "A responsive web application that connects to a Supabase database to fetch, analyze, and visualize employee data, providing key HR and management insights through interactive charts and metrics.",
+  "requestFramePermissions": []
+}
