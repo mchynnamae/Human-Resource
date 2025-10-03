@@ -11,6 +11,7 @@ import StatusBreakdown from './StatusBreakdown';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import EmployeeProfileModal from './EmployeeProfileModal';
+import EmptyDashboard from './EmptyDashboard';
 
 const supabaseUrl = 'https://xogdibcevtxsgmneznnn.supabase.co';
 // The user provided key is an anon public key, safe to be exposed in frontend code.
@@ -246,15 +247,19 @@ const Dashboard: React.FC = () => {
                 <div className="p-4 sm:p-6 lg:p-8 text-slate-800 dark:text-slate-200">
                      <header className="mb-8">
                         <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Employee Data Dashboard</h1>
-                        <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">
-                            {activeFilter.type !== 'none' 
-                                ? `Filtered by ${activeFilter.type}: ${activeFilter.value}`
-                                : 'Analytical insights into the workforce.'
-                            }
-                        </p>
+                        {employees.length > 0 && (
+                             <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">
+                                {activeFilter.type !== 'none' 
+                                    ? `Filtered by ${activeFilter.type}: ${activeFilter.value}`
+                                    : 'Analytical insights into the workforce.'
+                                }
+                            </p>
+                        )}
                     </header>
 
-                    {aggregatedData?.charts && (
+                    {employees.length === 0 ? (
+                        <EmptyDashboard />
+                    ) : aggregatedData?.charts ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             <StatusBreakdown data={aggregatedData.charts.statusBreakdown} total={aggregatedData.charts.totalEmployees} />
                             
@@ -274,9 +279,8 @@ const Dashboard: React.FC = () => {
                                 <AgeDistributionChart data={aggregatedData.charts.ageDistribution} />
                             </DashboardCard>
                         </div>
-                    )}
-                     {!aggregatedData?.charts && !loading && (
-                        <div className="text-center py-16">
+                    ) : (
+                         <div className="text-center py-16">
                             <h2 className="text-2xl font-semibold text-slate-700 dark:text-slate-300">No Data Found</h2>
                             <p className="text-slate-500 dark:text-slate-400 mt-2">There is no employee data matching your current filters.</p>
                         </div>
