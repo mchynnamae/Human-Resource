@@ -246,7 +246,7 @@ const Dashboard: React.FC = () => {
 
                 <div className="p-4 sm:p-6 lg:p-8 text-slate-800 dark:text-slate-200">
                      <header className="mb-8">
-                        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Employee Data Dashboard</h1>
+                        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Human Resource - CloudInkCo</h1>
                         {employees.length > 0 && (
                              <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">
                                 {activeFilter.type !== 'none' 
