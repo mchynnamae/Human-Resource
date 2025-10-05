@@ -88,10 +88,11 @@ const TenureDistributionChart: React.FC<TenureDistributionChartProps> = ({ data 
                 </Pie>
                 <Tooltip 
                     contentStyle={{
-                        backgroundColor: 'rgba(30, 41, 59, 0.9)',
-                        borderColor: '#475569',
-                        color: '#f1f5f9',
-                        borderRadius: '0.5rem'
+                        backgroundColor: 'white',
+                        borderColor: '#e2e8f0',
+                        color: '#1e293b',
+                        borderRadius: '0.5rem',
+                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
                     }}
                 />
                 <Legend wrapperStyle={{fontSize: "12px"}}/>

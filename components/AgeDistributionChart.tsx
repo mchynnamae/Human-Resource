@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 interface ChartData {
     name: string;
@@ -12,12 +12,10 @@ interface AgeDistributionChartProps {
     data: ChartData[];
 }
 
-// A vibrant, pink-themed color palette for visual consistency with the previous chart
+// A vibrant, pink-themed color palette
 const COLORS = ['#ec4899', '#f472b6', '#f9a8d4', '#db2777', '#be185d', '#831843'];
 
-// FIX: Update CustomLabelProps to reflect that Recharts passes optional properties.
 // Props provided by Recharts to the custom label renderer
-// FIX: Update prop types to match what Recharts provides (string | number) to fix TS error.
 interface CustomLabelProps {
     cx?: number | string;
     cy?: number | string;
@@ -31,17 +29,22 @@ const RADIAN = Math.PI / 180;
 
 // Custom label renderer to display percentage on each slice
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: CustomLabelProps) => {
-    // FIX: Add guards for optional properties to prevent runtime errors.
+    // Add guards for optional properties to prevent runtime errors.
     if (cx === undefined || cy === undefined || midAngle === undefined || innerRadius === undefined || outerRadius === undefined || percent === undefined) {
         return null;
     }
-    // FIX: Convert cx/cy to number type to prevent runtime errors during arithmetic operations.
+    // Convert cx/cy to number type to prevent runtime errors during arithmetic operations.
     const numCx = Number(cx);
     const numCy = Number(cy);
     // Calculate position for the label inside the slice
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+    const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.6;
     const x = numCx + radius * Math.cos(-midAngle * RADIAN);
     const y = numCy + radius * Math.sin(-midAngle * RADIAN);
+
+    // Don't render label for very small slices to avoid clutter
+    if (percent < 0.05) {
+        return null;
+    }
 
     return (
         <text
@@ -60,6 +63,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 const AgeDistributionChart: React.FC<AgeDistributionChartProps> = ({ data }) => {
     // Sorting ensures consistent color assignment for age brackets across renders
     const sortedData = [...data].sort((a,b) => a.name.localeCompare(b.name));
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -79,11 +83,12 @@ const AgeDistributionChart: React.FC<AgeDistributionChartProps> = ({ data }) => 
                     ))}
                 </Pie>
                 <Tooltip 
-                     contentStyle={{
-                        backgroundColor: 'rgba(30, 41, 59, 0.9)',
-                        borderColor: '#475569',
-                        color: '#f1f5f9',
-                        borderRadius: '0.5rem'
+                    contentStyle={{
+                        backgroundColor: 'white',
+                        borderColor: '#e2e8f0',
+                        color: '#1e293b',
+                        borderRadius: '0.5rem',
+                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
                     }}
                 />
                 <Legend wrapperStyle={{fontSize: "12px"}}/>
