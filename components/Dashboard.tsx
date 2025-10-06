@@ -263,7 +263,7 @@ const Dashboard: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             <StatusBreakdown data={aggregatedData.charts.statusBreakdown} total={aggregatedData.charts.totalEmployees} />
                             
-                            <DashboardCard title="Average Salary by Job Title">
+                            <DashboardCard title="Average Salary by Job Title" className="lg:col-span-2">
                                 <AverageSalaryChart data={aggregatedData.charts.avgSalaryByTitle} />
                             </DashboardCard>
 
