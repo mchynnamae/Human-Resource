@@ -18,7 +18,7 @@ const EmployeeProfileModal: React.FC<EmployeeProfileModalProps> = ({ employee, o
 
     const formatCurrency = (value: number | null | undefined) => {
         if (value === null || value === undefined) return 'N/A';
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(value);
+        return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', minimumFractionDigits: 0 }).format(value);
     };
 
     const formatDate = (dateString: string | null | undefined) => {
