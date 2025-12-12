@@ -34,8 +34,15 @@ const Dashboard: React.FC = () => {
         const fetchEmployees = async () => {
             setLoading(true);
             setError(null);
-            // Explicitly setting a limit of 5000 to override the default 1000 row limit
-            const { data, error } = await supabase.from('employees').select('*').limit(5000);
+            
+            // FETCH ALL EMPLOYEES
+            // We explicitly set .limit(5000) to override the Supabase client default of 1000 rows.
+            // We ensure there is NO .range() method chained here, as that would restrict the result set.
+            // Note: If you still see 1000 rows, check Supabase Project Settings > API > Max Rows.
+            const { data, error } = await supabase
+                .from('employees')
+                .select('*')
+                .limit(5000);
 
             if (error) {
                 // Provide a more descriptive error message in the UI
